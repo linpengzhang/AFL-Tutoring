@@ -1,0 +1,97 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}      % codifica dei font
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{lipsum}
+\usepackage{url}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\begin{document}
+% lettere accentate da tastiera
+% lingua del documento
+% genera testo fittizio
+% per scrivere gli indirizzi Internet
+\author{Linpeng Zhang}
+\title{Tutorato AFL}
+\maketitle
+\begin{abstract}
+    Per errori/dubbi/problemi: linpeng.zhang@studenti.unipd.it. \\Note: 
+    \begin{itemize}
+        \item purtroppo non siamo riusciti a fare molte tipologie di esercizi in questa lezione, ma non preoccupatevi rimedieremo la prossima volta;
+        \item se avete bisogno di tutorati extra contattatemi
+    \end{itemize}
+\end{abstract}
+\tableofcontents
+\section{Lez2}
+\subsection{Riassunto informale}
+Per dimostrare che un linguaggio è regolare basta definire un automa a stati finiti o un regexp che riconosca tale linguaggio. Per dimostrare che un linguaggio non è regolare bisogna supporre per assurdo che valga il pumping lemma e giungere ad una contraddizione. Nelle soluzioni degli esercizi è mostrato un possibile approccio.
+%Un automa a stati finiti, come suggerisce il nome, ha una "memoria limitata". Il mio consiglio per definire un automa che accetti un determinato linguaggio è pensare a cosa rappresenti ciascuno stato. Si noti infine che per essere sicuri che un automa riconosca un certo linguaggio bisognerebbe dimostrarlo (altrimenti non saremo mai sicuri). Ad esempio si possono dimostrare delle proprietà degli stati, o per induzione. Tuttavia, in genere, ciò non è richiesto.
+\subsection{Esercizi}
+Scrivere un'espressione regolare per stringhe binarie che:
+\begin{enumerate}
+    \item descriva l'insieme \(\{0,11,101\}\)
+    \item abbiano solo Il simbolo "0"
+    \item cominciano e finiscano per "1"
+    \item contengano almeno tre "1" consecutivi
+    \item contengano almeno tre "1"
+    \item abbiano lunghezza dispari
+\end{enumerate}
+I seguenti linguaggi sono regolari? Motivare la risposta. 
+\begin{enumerate}
+    \item $L=\{a^n|n=2^k, k\in \mathbb{N} \}$
+    \item $L=\{0^n1^m0^{m+n}|n,m\in\mathbb{N} \}$
+    \item $L=\{0^n0^{2^n}|n\in\mathbb{N} \}$
+    \item $L_{pal}=\{x\in\{0,1\}^*|$ x è palindrome $\}$
+    \item $L=\{x\in\{0,1\}^*|$ il numero di 0 è uguale al numero di 1 $\}$
+\end{enumerate}
+    \subsection{Soluzioni}
+    Espressioni regolari per stringhe binarie
+    \begin{enumerate}
+        \item $ 0+11+101 $
+        \item $ 0^* $
+        \item $1(0+1)^*1+1$
+        \item $(0+1)^*111(0+1)^*$
+        \item $(0+1)^*1(0 + 1)^*1(0 + 1)^*1(0 + 1)^*$
+        \item $((0+1)(0+1))^*(0+1)$
+    \end{enumerate}
+    Dire se il linguaggio dato è regolare.
+    \begin{enumerate}
+        \item Proviamo a scrivere una regexp o a definire un automa che riconosca il linguaggio dato. Dopo un minuto potete intuire che non è possibile, ma chiaramente non riuscire a scrivere una regexp non significa che non esista. Si giunge ad intuire che il linguaggio possa essere non regolare, e si prova a dimostrarlo con il PL.\\
+        Supponiamo per assurdo che L sia regolare. Allora vale il PL e sia h la lunghezza data dal PL.\\
+        Cerchiamo una parola $w\in L$ tale che $|w|\geq h$. (Il PL fornisce una proprietà per qualsiasi parola di lunghezza maggiore o uguale ad h; per trovare un assurdo è sufficiente dimostrare che una sola parola non soddisfi tale proprietà, ovvero non può essere "pompata". Nota che dovete scegliere una parola opportuna che credete non possa essere pompata, ovvero se scegliete una parola che non porta ad un assurdo non avete concluso niente: il linguaggio può essere sia regolare, sia non regolare, e potete o cambiare parola o riprendere la strada del costruire un automa a seconda della vostra intuizione).\\
+        Scegliamo $w=a^{2^h}$, che ovviamente soddisfa $|w|\geq h, \forall h \in \mathbb{N}$.\\ß
+        Sia $w=xyz$ e $|xy|\leq h$, $y\neq\epsilon$. Allora $xy$ sarà fatta solo di $a$, e cioè $x=a^n, y=a^m, n+m\leq h, m>0$.\\
+        Proviamo a pompare y. Prendiamo $w^{'}=xy^0z=xz=a^{2^h-m}$ poichè abbiamo tolto la y, cioè $a^m$.\\
+        La nuova parola appartiene al linguaggio? Ovvero, abbiamo un numero di a che è ancora una potenza di 2? In aula sono state riscontrate diverse opinioni:
+        \begin{itemize}
+            \item $w^{'}\notin \mathbb{L}$ per "ovvi" motivi. Ma in realtà non è così ovvio perché, ad esempio, $2^6-60=2^2$.
+            \item non si sa, dipende dal valore di m. Questa osservazione è saggia, ma non permette di risolvere il problema. Resta da cambiare parola, o esponente per pompare, o provare a scrivere una regexp. Non è che magari sfugge qualcosa?
+            \item $w^{'}\notin \mathbb{L}$ e lo si può dimostrare perché m è "piccolo". Infatti, per induzione si è dimostrato in aula che $2^{h-1} < 2^h-h \leq 2^h-m < 2^{h+1}$. Quindi si ha un assurdo, e il linguaggio di partenza non è regolare.
+        \end{itemize}
+        Questo esempio non è facile, ma è completo e credo possa aiutarvi a capire il ragionamento nell'interezza. Seguono esempi più semplici.
+        \item Supponiamo per assurdo che L sia regolare. Allora vale il PL e sia h la lunghezza data dal PL.\\
+        Cerchiamo una parola $w\in L$ tale che $|w|\geq h$.\\
+        Scegliamo $w=0^h1^h0^{2h}$, che ovviamente soddisfa $|w|\geq h, \forall h \in \mathbb{N}$.\\
+        Sia $w=xyz$ e $|xy|\leq h$, $y\neq\epsilon$. Allora $xy$ sarà fatta solo di $0$, cioè $x=0^n, y=0^m, n+m\leq h, m>0$.\\
+        Proviamo a pompare y. Prendiamo $w^{'}=xy^0z=xz=0^{h-m}1^h0^2h$.\\Questa parola non appartiene al linguaggio, poiché $h-m+h\neq 2h$. Quindi si ha un assurdo ed L non è regolare.
+        \item Supponiamo per assurdo che L sia regolare. Allora vale il PL e sia h la lunghezza data dal PL.\\
+        Cerchiamo una parola $w\in L$ tale che $|w|\geq h$.\\
+        Scegliamo $w=0^h0^{2^h}$, che ovviamente soddisfa $|w|\geq h, \forall h \in \mathbb{N}$.\\
+        Sia $w=xyz$ e $|xy|\leq h$, $y\neq\epsilon$. Allora $xy$ sarà fatta solo di $0$, cioè $x=0^n, y=0^m, n+m\leq h, m>0$.\\
+        Proviamo a pompare y. Prendiamo $w^{'}=xy^0z=xz=0^{h-m}0^{2^h}$.\\Questa parola non appartiene al linguaggio, poiché $h-m\neq h$. Quindi si ha un assurdo ed L non è regolare.
+        \item Supponiamo per assurdo che L sia regolare. Allora vale il PL e sia h la lunghezza data dal PL.\\
+        Cerchiamo una parola $w\in L$ tale che $|w|\geq h$.\\
+        Scegliamo $w=0^h110^h$, che ovviamente soddisfa $|w|\geq h, \forall h \in \mathbb{N}$.\\
+        Sia $w=xyz$ e $|xy|\leq h$, $y\neq\epsilon$. Allora $xy$ sarà fatta solo di $0$, cioè $x=0^n, y=0^m, n+m\leq h, m>0$.\\
+        Proviamo a pompare y. Prendiamo $w^{'}=xy^0z=xz=0^{h-m}110^h$.\\Questa parola non appartiene al linguaggio, poiché $h-m\neq h$ (quindi non è più palindrome). Si ha un assurdo ed L non è regolare.
+        \item Supponiamo per assurdo che L sia regolare. Allora vale il PL e sia h la lunghezza data dal PL.\\
+        Cerchiamo una parola $w\in L$ tale che $|w|\geq h$.\\
+        Scegliamo $w=0^h1^h$, che ovviamente soddisfa $|w|\geq h, \forall h \in \mathbb{N}$.\\
+        Sia $w=xyz$ e $|xy|\leq h$, $y\neq\epsilon$. Allora $xy$ sarà fatta solo di $0$, cioè $x=0^n, y=0^m, n+m\leq h, m>0$.\\
+        Proviamo a pompare y. Prendiamo $w^{'}=xy^0z=xz=0^{h-m}1^h$.\\Questa parola non appartiene al linguaggio, poiché $h-m\neq h$. Quindi si ha un assurdo ed L non è regolare.
+    \end{enumerate}
+    % Bibliografia
+    %\begin{thebibliography}{9}
+        %  Alcune soluzio
+    %\end{thebibliography}
+    \end{document}

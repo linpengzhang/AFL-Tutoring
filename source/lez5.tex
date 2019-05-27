@@ -1,0 +1,87 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}      % codifica dei font
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{lipsum}
+\usepackage{comment}
+\usepackage{url}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\begin{document}
+% lettere accentate da tastiera
+% lingua del documento
+% genera testo fittizio
+% per scrivere gli indirizzi Internet
+\author{Linpeng Zhang}
+\title{Tutorato AFL}
+\maketitle
+\begin{abstract}
+    Per errori/dubbi/problemi: linpeng.zhang@studenti.unipd.it.% \\Note:
+    \\Gli esercizi contrassegnati dal simbolo (C) sono (a mio parere) molto simili, se non identici, ad esercizi assegnati a compitini di anni passati.
+\end{abstract}
+\tableofcontents
+\section{Lez5}
+\subsection{Riassunto informale}
+\begin{itemize}
+    \item in genere, data una CFG G, per dimostrare che $L=L(G)$ si dimostra sia che $L\subseteq L(G) \:$ e $L\supseteq L(G)$; spesso la prima parte si fa per induzione sulla lunghezza della stringa, mentre la seconda per induzione sul numero di passi di derivazione;
+    \item se una CFG G ha più variabili per dimostrare che $L=L(G)$ si possono dimostrare prima i linguaggi prodotti da alcune variabili interne alla grammatica per poi dimostrare la tesi di partenza.
+\end{itemize}
+\subsection{Esercizi}
+\begin{enumerate}
+    \item Sia $L=\{x\in\{a,b\}^{*}|$ il numero di a è minore del numero di b $\}$. Dire se il linguaggio è regolare e, a seconda della risposta (da motivare), definire una CFG o un FA che accetti tale $L$;
+ %   \item Sia $L=\{0^{2n}10^n, n\in\mathbb{N}\}$. Dire se il linguaggio è regolare e, a seconda della risposta (da motivare), definire una CFG o un FA che accetti tale $L$;
+   % \item Sia data la CFG:\\$S\rightarrow aB$\\$B\rightarrow Ab|b$\\$A\rightarrow aB|a$\\Definire il suo linguaggio e motivare la propria asserzione;
+  % \item Sia $L=\{0^{2n}10^{n^2}, n\in\mathbb{N}\}$. Dire se il linguaggio è regolare e, a seconda della risposta (da motivare), definire una CFG o un FA che accetti tale $L$;
+    \item (C) Sia $L=\{$ stringhe di 0 e 1 che iniziano e finiscono con 0$\}$. Dire se il linguaggio è regolare e definire, se possibile, una CFG o un FA che accetti $L$;
+    \item (C) Sia $L=\{a^{n-m}b^mc^n|n>m>0\}$. Dire se il linguaggio è regolare e definire, se possibile, una CFG o un FA che accetti $L$;
+    \item (C) Sia $L$ un linguaggio regolare sull'alfabeto $\Sigma$.\\Dire (e motivare) se $L'=\{w\in \Sigma ^{*} : \exists x\in \Sigma ^{*}$ tale che $wx \in L\}$ è regolare;
+\end{enumerate}
+\subsection{Soluzioni}
+\begin{enumerate}
+    \item si può dimostrare con il PL che $L$ non è regolare. Intuitivamente per trovare una CFG notiamo che data una stringa in $L$ che abbia $n_b$ occorrenze di b e $n_a$ occorrenze di a, allora o $n_b=n_a+1$ o $n_b>n_a+1$. In particolare:
+    \begin{enumerate}
+        \item nel primo caso, le stringhe saranno del tipo $ebe$ dove e è una stringa con $n_a=n_b$;
+        \item nel secondo caso, le stringhe saranno costituite dalla concatenazione di due stringhe entrambe appartenenti a $L$;
+    \end{enumerate}
+    segue allora una possibile CFG:\\
+    \begin{minipage}{\linewidth}
+        \centering $S \rightarrow EbE|SS$
+        \centering $E \rightarrow \epsilon | aEb | bEa | EE$
+    \end{minipage}
+    La dimostrazione consta dei seguenti passi, di cui diamo una traccia:
+    \begin{enumerate}
+        \item $L(E)=L_e=\{x\in \Sigma ^*$ tale che $n_a=n_b\}$:
+        \begin{enumerate}
+            \item ("$\Rightarrow$") sia $w\in L(E)$. Dimostriamo per induzione sul numero di passi di derivazione. È immediato constatare che con un passo si ha $E\Rightarrow \epsilon \in L$.\\Induttivamente, se si hanno $n+1$ passi di derivazione, il primo passo sarà: $E\Rightarrow aEb$ o $E\Rightarrow bEa$ o $E\Rightarrow EE$. In tutti i casi, utilizzando altri $n$ passi di derivazione si avrà una nuova stringa in $L$;
+            \item ("$\Leftarrow$") sia $w\in L_e$. Dimostriamo per induzione sulla lunghezza della stringa. Se $|w|=0$ allora $w=\epsilon \in L(E)$ perchè esiste la produzione che lo fa.\\\textit{Se $|w|=2n+2$ allora sembrerebbe che $w=w'w''$ con $w',w''\in L_e$, ma non è vero, anche se la cosa sembrava convincente tant'è che nessuno se n'è accorto. Ad esempio $aaabbbbbbbb$ non è del tipo $w'w''$ con $w',w''\in L$}\\Versione corretta: se $|w|=2n+2$ allora esiste una suddivisione del tipo $w=xaby$ o $w=xbay$ con $x,y\in L_e$. Per l'ipotesi induttiva x e y si possono derivare, perché hanno una lunghezza minore di $2n+2$, e usando un'opportuna prima produzione, si deriva proprio w;
+        \end{enumerate}
+        \item $L(S)=L$:
+        \begin{enumerate}
+            \item ("$\Rightarrow$") sia $w\in L(S)$. Dimostriamo per induzione sul numero di passi di derivazione. È immediato constatare che con due passi si ha $S\Rightarrow ^2 b  \in L$.\\Induttivamente, se si hanno $n+1$ passi di derivazione, il primo passo sarà: $S\Rightarrow EbE$ o $S\Rightarrow SS$. In tutti i casi, utilizzando altri $n$ passi di derivazione si avrà una nuova stringa in $L$;
+            \item ("$\Leftarrow$") sia $w\in L$. Allora sarà del tipo $w=ebe$ oppure $w=x_1x_2...x_k$ dove $x_i$ è una stringa che ha esattamente una b in più del numero di a; nel primo caso basta usare la prima produzione di S, nel secondo basterà usare la seconda produzione un opportuno numero di volte. Poi la E sappiamo che deriva una stringa con $n_a=n_b$ e quindi si ha la tesi.
+        \end{enumerate}
+    \end{enumerate}
+    %\item si può dimostrare con il PL che $L$ non è regolare, prendendo ad esempio $w=0^{2h}10^h$. Una CFG che genera $L$ è data da:\\ $S\rightarrow 1|00S0$;
+  %  \item si può dimostrare che A genera $L_A=\{a^nb^m|n=m+1$ oppure $n=m$ con $n>0,m\geq 0\}$, B genera $L_B=\{a^nb^m|m=n+1$ oppure $n=m$ con $m>0,n\geq 0\}$. Dalle due asserzioni precedenti si dimostra che S genera $L_S=\{a^nb^m|n=m+1$ oppure $n=m$ con $n,m>0\}$: infatti S produce le stringhe che produce B con una a all'inizio, e la correttezza segue dalla definizione.
+    
+    \item è immediato dare una regexp, ad esempio $R=0(0+1)^{*}0+0$ oppure (per gli short-coder) $R_{sc}=0(1^*0)^*$;
+    \item si può dimostrare con il PL che $L$ non è regolare, prendendo ad esempio $w=a^hb^hc^{2h}$ e un qualsiasi $k$;
+    \item sia $A=(Q,\Sigma, q_0, \delta, F)$ l'automa che riconosce $L$. Allora $A'=(Q, \Sigma ,q_0,\delta ,F')$, $F'=\{q\in Q|$ esiste una sequenza di transizioni da $q$ ad uno stato finale $f\in F \}$ è l'automa uguale ad A se non per l'insieme degli stati finali. Certamente questo si può fare per ogni automa (prendete un FA qualsiasi e fatelo, se non vi fidate). Dimostriamo ora che $L'=L(A')$:
+    \begin{itemize}
+        \item ("$\Rightarrow$") sia $w\in L'$. Per la definizione $\exists x \in \Sigma ^* $ tale che $wx\in L$. Poiché A è un DFA, esiste una sola sequenza da $q_0$ che accetta $wx$. Ma se da $q_0$ leggo $w$ arrivando in $q$ e poi leggo $x$ arrivando in uno stato finale, allora sicuramente $q$ è uno stato finale di $A'$, per come è stato costruito!
+        \item ("$\Leftarrow$") sia $w\in L(A')$. Allora, per come è stato costruito $A'$ esiste una sequenza da $q$ ad uno stato finale di $A$, quindi $w \in L'$.
+    \end{itemize}
+\end{enumerate}
+
+\begin{comment}
+Si ha $L(G)=\{a^nb^m|n,m\in\mathbb{N},n+m\geq 1\}=L$. L'asserzione va dimostrata per induzione in entrambi i versi. Una traccia alla dimostrazione è la seguente:
+\begin{enumerate}
+    \item ("$\Rightarrow$")\\Caso base: 1 derivazione, cioè $S\Rightarrow a$ o $S\Rightarrow b$ entrambe apparteSnenti a $L$.\\Caso induttivo: $S\Rightarrow aS\Rightarrow ^{n}aw'$ o $S\Rightarrow bS\Rightarrow ^{n}bw'$, ma $w' \in L$ per ipotesi induttiva. Aggiungendo una $a$ all'inizio o una $b$ alla fine rimane comunque una stringa in $L$;
+    \item ("$\Leftarrow$")\\Caso base: lunghezza 1, cioè $w=a$ o $w=b$. Naturalmente $L(G)$ contiene queste stringhe perché ci sono direttamente le produzioni che lo fanno.\\Caso induttivo: $|w|=n+1$. Allora $w=w'b$ o $w=aw'$. Per ipotesi induttiva $S=>^{*}w'$. Quindi: $S\Rightarrow aS\Rightarrow aw'=w$ o $S\Rightarrow bS\Rightarrow bw'=w \: \Rightarrow w\in L(G)$.
+\end{enumerate}
+\end{comment}
+    % Bibliografia
+    %\begin{thebibliography}{9}
+        %  Alcune soluzio
+    %\end{thebibliography}
+    \end{document}

@@ -1,0 +1,89 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}      % codifica dei font
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{lipsum}
+\usepackage{url}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\begin{document}
+% lettere accentate da tastiera
+% lingua del documento
+% genera testo fittizio
+% per scrivere gli indirizzi Internet
+\author{Linpeng Zhang}
+\title{Tutorato AFL}
+\maketitle
+\begin{abstract}
+    Per errori/dubbi/problemi: linpeng.zhang@studenti.unipd.it.% \\Note: 
+\end{abstract}
+\tableofcontents
+\section{Lez4}
+\subsection{Riassunto informale}
+\begin{itemize}
+    \item 
+    \item per mostrare che un linguaggio è regolare o meno si possono anche usare le proprietà di chiusura viste a lezione.
+\end{itemize}
+%Un automa a stati finiti, come suggerisce il nome, ha una "memoria limitata". Il mio consiglio per definire un automa che accetti un determinato linguaggio è pensare a cosa rappresenti ciascuno stato. Si noti infine che per essere sicuri che un automa riconosca un certo linguaggio bisognerebbe dimostrarlo (altrimenti non saremo mai sicuri). Ad esempio si possono dimostrare delle proprietà degli stati, o per induzione. Tuttavia, in genere, ciò non è richiesto.
+\subsection{Esercizio}
+\subsubsection{Esercizio 1}
+Minimizzare il seguente automa.
+\begin{minipage}{\linewidth}
+    \centering
+    \includegraphics[width=5cm]{Lez4min.png}
+\end{minipage}
+\subsubsection{Esercizio 2}
+Definire il linguaggio che accetta la CFG: $S\rightarrow aS|Sb|a|b$ e dimostrare la propria asserzione.
+   \subsubsection{Esercizio 3}
+    Siano dati una serie di linguaggi:
+    \begin{enumerate}
+        \item $L=\{0^m1^n,m\leq n,$ $n,m\in \mathbb{N}\}$
+        \item $L=\{0^m1^n,n\neq m,$ $n,m\in \mathbb{N}\}$
+        \item $L=\{x\in\{a,b\}^{*}|$ il numero di a è minore del numero di b $\}$
+    \end{enumerate}
+    Dire per ognuno di essi se:
+    \begin{itemize}
+        \item il linguaggio è regolare? Motivare la risposta;
+        \item fornire, se esiste, una CFG che genera L e mostrarne la correttezza;
+    \end{itemize}
+
+    \subsection{Soluzioni}
+    \subsubsection{Esercizio 1}
+    \begin{minipage}{\linewidth}
+        \centering
+        \includegraphics[width=5cm]{Lez4minsol.png}
+    \end{minipage}
+    \subsubsection{Esercizio 2}
+Si ha $L={a^nb^m|n,m\in\mathbb{N}, n+m\geq 1$. L'asserzione va dimostrata per induzione in entrambi i versi. Una traccia alla dimostrazione è la seguente:
+\begin{enumerate}
+    \item ("$\Rightarrow$")\\Caso base: 1 derivazione, cioè $S\Rightarrow a$ o $S\Rightarrow b$ entrambe apparteSnenti a $L$.\\Caso induttivo: $S\Rightarrow aS\Rightarrow ^{n}aw'$ o $S\Rightarrow bS\Rightarrow ^{n}bw'$, ma $w' \in L$ per ipotesi induttiva. Aggiungendo una $a$ all'inizio o una $b$ alla fine rimane comunque una stringa in $L$;
+    \item ("$\Leftarrow$")\\Caso base: lunghezza 1, cioè $w=a$ o $w=b$. Naturalmente $L(G)$ contiene queste stringhe perché ci sono direttamente le produzioni che lo fanno.\\Caso induttivo: $|w|=n+1$. Allora $w=w'b$ o $w=aw'$. Per ipotesi induttiva $S=>^{*}w'$. Quindi: $S\Rightarrow aS\Rightarrow aw'=w$ o $S\Rightarrow bS\Rightarrow bw'=w$.
+\end{enumerate}
+\subsubsection{Esercizio 3}
+Le asserzioni che seguono vanno dimostrate.
+    \begin{enumerate}
+        %CFG 4,
+        \item si può dimostrare con il PL che $L$ non è regolare.
+        \item si può dimostrare con il PL che $L$ non è regolare. Una possibile CFG è $S \rightarrow \epsilon | 0S1 | S1$;
+        \item si può dimostrare con il PL che $L$ non è regolare. Intuitivamente per trovare una CFG notiamo che data una stringa in $L_2$ che ha $n_b$ occorrenze di b e $n_a$ occorrenze di a, allora o $n_b=n_a+1$ o $n_b>n_a+1$. In particolare:
+        \begin{enumerate}
+            \item nel primo caso, le stringhe saranno del tipo $ebe$ dove e è una stringa con $n_a=n_b$;
+            \item nel secondo caso, le stringhe saranno costituite dalla concatenazione di due stringhe entrambe appartenenti a $L$;
+        \end{enumerate}
+        segue allora la seguente CFG:\\
+        \begin{minipage}{\linewidth}
+            \centering $S \rightarrow EbE | SS$\\
+            \centering $E \rightarrow \epsilon | aEb | bEa | EE$
+        \end{minipage}
+        \item Supponiamo per assurdo che L sia regolare. Allora vale il PL e sia h la lunghezza data dal PL;\
+        Cerchiamo una parola $w\in L$ tale che $|w|\geq h$.\\
+        Scegliamo $w=0^{h^3}$, che ovviamente soddisfa $|w|\geq h, \forall h \in \mathbb{N}$.\\
+        Sia $w=xyz$ e $|xy|\leq h$, $y\neq\epsilon$. Allora $xy$ sarà fatta solo di $0$, cioè $x=0^n, y=0^m, n+m\leq h, m>0$.\\
+        Proviamo a pompare y. Prendiamo $w^{'}=xy^2z=0^{h^3+m}$.\\Sono sufficienti per arrivare al cubo successivo? Alla meglio si ha $m=h$, ma si dimostra immediatamente che $(h+1)^3>h^3+h$. Quindi non basta (anche nel migliore dei casi), cioè $w'\notin L$ e quindi $L$ non è regolare.
+        NB: formalmente si può dimostrare che $h^3<h^3+m\leq h^3+h<(h+1)^3$.
+    \end{enumerate}
+    % Bibliografia
+    %\begin{thebibliography}{9}
+        %  Alcune soluzio
+    %\end{thebibliography}
+    \end{document}
