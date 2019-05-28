@@ -49,7 +49,9 @@
     \item se leggo $c$ e ho $X$ in cima consumo una $X$;
    \end{itemize}
    \includegraphics[scale=0.5]{Lez7sol4.png}
-    \item Una stringa non è nella forma $ww$ se ha almeno una coppia di simboli a distanza $|w|$ diversi tra di loro. Quindi, un automa a pila che riconosce tale linguaggio deve leggere K caratteri, finché ad un certo punto, nondeterministicamente, pensa di aver trovato un simbolo che sarà diverso a distanza $|w|$. Successivamente ne legge altri K, svuotando la pila. Poi ne legge un numero arbitrario (ad esempio L), legge il carattere diverso ed infine legge altri L caratteri, svuotando la pila. Infine svuota anche $Z_0$.\\ Da questa intuizione segue l'automa seguente:\\ \includegraphics[scale=0.5]{Lez7sol5.png}
+    \item Una stringa non è nella forma $ww$ se ha almeno una coppia di simboli a distanza $|w|$ diversi tra di loro. Quindi, un automa a pila che riconosce tale linguaggio deve leggere K caratteri, finché ad un certo punto, nondeterministicamente, pensa di aver trovato un simbolo che sarà diverso a distanza $|w|$. Successivamente ne legge altri K, svuotando la pila. Poi ne legge un numero arbitrario (ad esempio L), legge il carattere diverso ed infine legge altri L caratteri, svuotando la pila. Infine svuota anche $Z_0$.\\ 
+    Da questa intuizione segue l'automa seguente:\\ 
+    \includegraphics[scale=0.5]{Lez7sol5.png}
        %   \item si può dimostrare che A genera $L_A=\{a^nb^m|n=m+1$ oppure $n=m$ con $n>0,m\geq 0\}$, B genera $L_B=\{a^nb^m|m=n+1$ oppure $n=m$ con $m>0,n\geq 0\}$. Dalle due asserzioni precedenti si dimostra che S genera $L_S=\{a^nb^m|n=m+1$ oppure $n=m$ con $n,m>0\}$: infatti S produce le stringhe che produce B con una a all'inizio, e la correttezza segue dalla definizione.\\
    %  Un automa a pila che accetta tale linguaggio è:\\
   %  \includegraphics[scale=0.5]{Lez7sol6.png}
