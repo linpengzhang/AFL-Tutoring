@@ -1,0 +1,64 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}      % codifica dei font
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{lipsum}
+\usepackage{comment}
+\usepackage{url}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\begin{document}
+% lettere accentate da tastiera
+% lingua del documento
+% genera testo fittizio
+% per scrivere gli indirizzi Internet
+\author{Linpeng Zhang}
+\title{Tutorato AFL}
+\maketitle
+\begin{abstract}
+    Per errori/dubbi/problemi: linpeng.zhang@studenti.unipd.it.
+\end{abstract}
+\tableofcontents
+\section{Lez11}
+\subsection{Esercizi}
+\begin{enumerate}
+    \item 4-Color consiste nel colorare i vertici di un grafo non orientato assegnando 4 colori diversi e in modo che due vertici adiacenti abbiano colori differenti. Dire se 4-Color è un problema NP-completo. Dimostrare la propria asserzione.
+    \item Circuito Toniano consiste nel trovare un ciclo che attraversa almeno la metà dei vertici di un grafo esattamente una volta. Dire se Circuito Toniano è un problema NP-completo. Dimostrare la propria asserzione.
+    %\item Sia Set-PartinioningRectangleTiling chiede Dire se RectangleTiling è un problema NP-completo. Dimostrare la propria asserzione.
+    \item Circuito Hamiltoniano pesante consiste nel trovare un ciclo il cui peso sia maggiore o uguale alla metà della somma totale di tutti i pesi del grafo. Dire se Circuito Hamiltoniano pesante è un problema NP-completo. Dimostrare la propria asserzione.
+    \item LP chiede di trovare il cammino semplice di peso massimo in un grafo non orientato e pesato G. Dire se LP un problema NP-completo. Dimostrare la propria asserzione.
+    %\item Dire se PebbleDestruction è un problema NP-completo. Dimostrare la propria asserzione.
+    %\item Dire se Doppio Circuito Hamiltoniano è un problema NP-completo. Dimostrare la propria asserzione.
+
+\end{enumerate}
+\subsection{Soluzioni}
+\begin{enumerate}
+    \item Il problema è NP-Completo. La dimostrazione consta di due passaggi:
+    \begin{enumerate}
+    \item il problema è NP: un certificato è una mappa che associa ciascun vertice al proprio colore; si può verificare ciclando sugli archi in tempo certamente polinomiale al numero degli archi; 
+    \item il problema è NP-Hard: si riduce 3-COLOR a 4-COLOR. Data un'istanza g per 3-COLOR la trasformazione h(g) consiste nel collegare ogni vertice in g ad un nodo isolato. In questo modo: se g è 3-Colorabile allora g è 4-Colorabile visto che basta assegnare il quarto colore al nodo aggiunti. Se h(g) è 4-Colorabile, certamente tutti i nodi in g hanno avuto 3 colori perché il nodo aggiunto è collegato a tutti gli altri nodi ed è quindi di un solo colore.
+    \end{enumerate}
+    \item Il problema è NP-Completo. La dimostrazione consta di due passaggi:
+    \begin{enumerate}
+    \item il problema è NP: un certificato è una sequenza di vertici. Stabilire se questi sono collegati, se sono almeno la metà dei vertici e se il primo coincide con l'ultimo richiede tempo polinomiale.
+    \item il problema è NP-Hard: si riduce Circuito Hamiltoniano a Circuito Toniano. Data un'istanza g di un grafo semplice per Circuito Hamiltoniano la trasformazione h(g) consiste nel raddoppiare il numero di vertici aggiungendo nodi isolati. In questo modo: se g ha un Circuito Hamiltoniano allora h(g) avrà un circuito toniano (che è proprio il circuito hamiltoniano in g, che passa per metà dei vertici). Se h(g) ha un circuito toniano, certamente sarà fatto da tutti e soli i vertici in g, rappresentando quindi un Circuito Hamiltoniano in g.
+    \end{enumerate}
+    \item Il problema è NP-Completo. La dimostrazione consta di due passaggi:
+    \begin{enumerate}
+    \item il problema è NP: un certificato è una sequenza di vertici. Stabilire se questi sono collegati, sommare i pesi e verificare che superi la metà della somma totale degli archi, e verificare se il primo vertice coincide con l'ultimo richiede tempo polinomiale.
+    \item il problema è NP-Hard: si riduce Circuito Hamiltoniano a Circuito Hamiltoniano pesante. Data un'istanza g di un grafo semplice per Circuito Hamiltoniano la trasformazione h(g) consiste nell'inserire pesi nulli su ogni arco. In questo modo: se g ha un Circuito Hamiltoniano allora h(g) avrà un circuito Hamiltoniano pesante, visto il circuito in g ha come somma dei pesi 0 che è $\geq$ alla somma dei pesi di tutti gli archi. Se h(g) ha un circuito Hamiltoniano pesante allora certamente è anche un circuito Hamiltoniano in g, visto che vertici e archi sono gli stessi a meno dei pesi.
+    \end{enumerate}
+    \item Bisogna considerare il problema di decisione: esiste un grafo di peso maggiore o uguale a k? Tale problema è NP-Hard. La dimostrazione consta di due passaggi:
+    \begin{enumerate}
+        \item il problema è NP: un certificato è una sequenza di vertici e un valore k. Verificare che siano collegati e che il peso sia maggiore o uguale a k avviene in tempo polinomiale percorrendo tali vertici.
+        \item il problema è NP-Hard: si riduce Circuito Hamiltoniano a LP. Data un'istanza g di un grafo semplice per Circuito Hamiltoniano la trasformazione h(g) consiste nell'inserire pesi unitari su ogni arco. In questo modo: se g ha un Circuito Hamiltoniano allora h(g) avrà un cammino di peso maggiore o uguale al numero di vertici. Se h(g) ha un cammino di peso maggiore o uguale al numero di vertici, certamente ci sarà un Circuito Hamiltoniano in g.
+    \end{enumerate}
+\end{enumerate}
+
+
+
+    % Bibliografia
+    %\begin{thebibliography}{9}
+        %  Alcune soluzio
+    %\end{thebibliography}
+\end{document}
