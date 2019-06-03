@@ -1,0 +1,65 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}      % codifica dei font
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{lipsum}
+\usepackage{comment}
+\usepackage{url}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\begin{document}
+% lettere accentate da tastiera
+% lingua del documento
+% genera testo fittizio
+% per scrivere gli indirizzi Internet
+\author{Linpeng Zhang}
+\title{Tutorato AFL}
+\maketitle
+\begin{abstract}
+    Per errori/dubbi/problemi: linpeng.zhang@studenti.unipd.it.
+\end{abstract}
+\tableofcontents
+\section{Lez12}
+Riscrivere le soluzioni dei professori sarebbe uno spreco di tempo, motivo per cui ho preferito fare un "riassunto informale".
+\subsection{Riassunto informale}
+\subsubsection{Automi a pila}
+\begin{enumerate}
+    \item un automa a pila nondeterministico con qualsiasi tipo di accettazione riconosce tutte i CFL;
+    \item un automa a pila deterministico DPDA ha:
+    \begin{enumerate}
+        \item al più uno stato per ogni tripla (stato, input, cima della pila):
+        \item non può decidere se consumare o meno l'input. Cioè se l'automa ha una transizione per (q,$\epsilon$,X) allora non può averne una per (q, unastringa, X).
+    \end{enumerate}
+    \item un DPDA per stato finale riconosce tutti i linguaggi regolari, ma non tutti i CFL (ad esempio non $L_pal$);
+    \item un DPDA per stack vuoto riconosce un sottoinsieme dei CFL che hanno la proprietà del prefisso: ovvero un prefisso di una parola del linguaggio non può a sua volta essere una parola del linguaggio;
+    \item sia P un DPDA. Allora L(P) non è ambiguo.
+\end{enumerate}
+\subsubsection{Indecidibilità}
+\begin{enumerate}
+    \item ci sono linguaggi non RE, detti anche indecibili. Lo sono ad esempio $L_d, comp(L_u), L_{e}$;
+    \item ci sono linguaggi RE: data una TM che riconosce un linguaggio RE, se riceve in input una stringa nel linguaggio la TM la accetta e termina; se riceve in input una stringa non nel linguaggio, la TM non necessariamente termina. $L_u, L_{ne}$ lo sono.
+    \item ci sono linguaggi RE ricorsivi: data una TM che riconosce un linguaggio RE ricorsivi, se riceve in input una stringa nel linguaggio la TM la accetta e termina; se riceve in input una stringa non nel linguaggio, la TM certamente termina;
+\end{enumerate}
+\subsubsection{Trattabilità}
+\begin{enumerate}
+    \item abbiamo trattato solamente i problemi di decisione, ma ciò non è limitativo in quanto molti problemi possono ricondursi ad una variante "decisionale";
+    \item un problema è P se una macchina di Turing deterministica lo risolve in tempo polinomiale;
+    \item un problema è NP se una macchina di Turing nondeterministica lo risolve in tempo polinomiale, oppure se esiste un certificato della soluzione che può essere verificato in tempo polinomiale;
+    \item un problema è NP-hard se può essere utilizzato come sottoprocedura per risolvere qualsiasi problema in NP con una eventuale trasformazione in tempo polinomiale;
+    \item un problema è NP-completo se è NP e NP-hard. Quindi per dimostrare che un P' è NP-completo dovrete:
+    \begin{enumerate}
+        \item dire com'è fatto un certificato e come verificarlo in tempo polinomiale;
+        \item fare una riduzione di un problema NP-completo o NP-hard a P'. In particolare la trasformazione h(x) dell'input deve avvenire in tempo polinomiale e dovete dimostrare come risolvere il problema NP-completo sull'input originario sia equivalente a risolvere il problema P' sull'input trasformato.
+    \end{enumerate}
+    %\item Sia Set-PartinioningRectangleTiling chiede Dire se RectangleTiling è un problema NP-completo. Dimostrare la propria asserzione.
+    %\item Dire se PebbleDestruction è un problema NP-completo. Dimostrare la propria asserzione.
+    %\item Dire se Doppio Circuito Hamiltoniano è un problema NP-completo. Dimostrare la propria asserzione.
+\end{enumerate}
+
+
+
+    % Bibliografia
+    %\begin{thebibliography}{9}
+        %  Alcune soluzio
+    %\end{thebibliography}
+\end{document}
